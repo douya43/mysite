@@ -1,9 +1,19 @@
-<h1>{{ question.question_text }}</h1>
+{% extends "polls/base.html" %}
+{% block base %}
 
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-{% endfor %}
-</ul>
+    <h1>{{ question.question_text }}</h1>
 
-<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+    <ul>
+    {% for choice in question.choice_set.all %}
+        <div>{{ choice.choice_text }}</div>
+        <div class="progress">
+           <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ choice.votes }}%;"><span class="sr-only">60% Complete</span></div>{{ choice.votes }}
+        </div>
+        vote{{ choice.votes|pluralize }}
+
+    {% endfor %}
+    </ul>
+
+    <a href="{% url 'polls:detail' question.id %}">再投一次</a>
+
+{% endblock %}
